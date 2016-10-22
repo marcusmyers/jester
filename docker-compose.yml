@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  app:
+    image: marcusmyers/jester
+    volume:
+      - ./sounds:/app/sounds
