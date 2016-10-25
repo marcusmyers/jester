@@ -7,3 +7,4 @@ services:
       - 20000:8080
     volumes:
       - "/media/data1/sounds/:/app/sounds/"
+    restart: always
