@@ -6,6 +6,12 @@ $failSounds = dir('sounds/failure');
 $arrSuccessFiles = [];
 $arrFailFiles = [];
 
+if($method != "GET") {
+  header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden", true, 404);
+  return json_encode(["status"=>"404 forbidden"]);
+  exit();
+}
+
 while (false !== ($entry = $successSounds->read())) {
   if ($entry != "." && $entry != ".." && $entry != ".gitkeep") {
     $arrSuccessFiles [] = $successSounds->path ."/". $entry;
@@ -32,6 +38,7 @@ switch ($route) {
     header("Location: /". $arrFailFiles[array_rand($arrFailFiles)]);
     break;
   default:
-    echo "Please pass in a route";
+    header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden", true, 404);
+    return json_encode(["status"=>"404 not found"]);
     break;
 }
