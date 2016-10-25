@@ -29,13 +29,26 @@ $failSounds->close();
 switch ($route) {
   case '/random':
     $arrFiles = array_merge($arrFailFiles, $arrSuccessFiles);
-    header("Location:  /". $arrFiles[array_rand($arrFiles)]);
+    $file = $arrFiles[array_rand($arrFiles)];
+    header("Content-Type: audio/mpeg");
+    header("Content-Length: ". filesize($file));
+    header('Content-Disposition: inline; filename="random.mp3";');
+    header('Cache-Control: no-cache');
+    readfile($file);
     break;
   case '/success/random':
-    header("Location: /". $arrSuccessFiles[array_rand($arrSuccessFiles)]);
+    $file = $arrSuccessFiles[array_rand($arrSuccessFiles)];
+    header("Content-Type: audio/mpeg");
+    header("Content-Length: ". filesize($file));
+    header('Content-Disposition: inline; filename="success.mp3";');
+    readfile($file);
     break;
   case '/failure/random':
-    header("Location: /". $arrFailFiles[array_rand($arrFailFiles)]);
+    $file = $arrFailFiles[array_rand($arrFailFiles)];
+    header("Content-Type: audio/mpeg");
+    header("Content-Length: ". filesize($file));
+    header('Content-Disposition: inline; filename="failure.mp3";');
+    readfile($file);
     break;
   default:
     header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden", true, 404);
