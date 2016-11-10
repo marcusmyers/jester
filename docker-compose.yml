@@ -2,9 +2,8 @@ version: '2'
 
 services:
   app:
-    image: marcusmyers/jester
+    build: .
     ports:
       - 30000:8080
     volumes:
-      - "/media/data1/sounds/:/app/sounds/"
-    restart: always
+      - .:/app
