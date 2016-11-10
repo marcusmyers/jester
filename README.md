@@ -35,18 +35,20 @@ docker-compose -f docker-compose.prod.yml up -d
 
 To test the server is working simply put the following in a browser.
 
-`http://<ip of jester server>:30000/random.mp3`
+http://&lt;ip of jester server&gt;:30000/random.mp3
 
 #### For successful sounds
 
-`http://<ip of jester server>:30000/success/random.mp3`
+http://&lt;ip of jester server&gt;:30000/success/random.mp3
 
 #### For failure sounds
 
-`http://<ip of jester server>:30000/failure/random.mp3`
+http://&lt;ip of jester server&gt;:30000/failure/random.mp3
 
 ## Development
 
 To run jester in development run the following from a terminal.
 
-`docker-compose up -d`
+```
+docker-compose up -d
+```
