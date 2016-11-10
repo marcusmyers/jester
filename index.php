@@ -1,6 +1,6 @@
 <?php
 $method = $_SERVER['REQUEST_METHOD'];
-$route = $_SERVER['PATH_INFO'];
+$route = $_SERVER['REQUEST_URI'];
 $successSounds = dir('sounds/success');
 $failSounds = dir('sounds/failure');
 $arrSuccessFiles = [];
@@ -8,7 +8,7 @@ $arrFailFiles = [];
 
 if($method != "GET") {
   header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden", true, 404);
-  return json_encode(["status"=>"404 forbidden"]);
+  echo json_encode(["status"=>"404 forbidden"]);
   exit();
 }
 
@@ -27,7 +27,7 @@ while (false !== ($entry = $failSounds->read())) {
 $failSounds->close();
 
 switch ($route) {
-  case '/random':
+  case '/random.mp3':
     $arrFiles = array_merge($arrFailFiles, $arrSuccessFiles);
     $file = $arrFiles[array_rand($arrFiles)];
     header("Content-Type: audio/mpeg");
@@ -36,14 +36,14 @@ switch ($route) {
     header('Cache-Control: no-cache');
     readfile($file);
     break;
-  case '/success/random':
+  case '/success/random.mp3':
     $file = $arrSuccessFiles[array_rand($arrSuccessFiles)];
     header("Content-Type: audio/mpeg");
     header("Content-Length: ". filesize($file));
     header('Content-Disposition: inline; filename="success.mp3";');
     readfile($file);
     break;
-  case '/failure/random':
+  case '/failure/random.mp3':
     $file = $arrFailFiles[array_rand($arrFailFiles)];
     header("Content-Type: audio/mpeg");
     header("Content-Length: ". filesize($file));
@@ -51,7 +51,7 @@ switch ($route) {
     readfile($file);
     break;
   default:
-    header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden", true, 404);
-    return json_encode(["status"=>"404 not found"]);
+    header($_SERVER["SERVER_PROTOCOL"]." 404 Forbidden", true, 404);
+    echo json_encode(["status"=>"404 not found", "route"=>$route]);
     break;
 }
